@@ -8,7 +8,25 @@ services:
     ports:
       - 3000:3000
 
+  frontend-test:
+    depends_on: 
+      - backend
+    build: ./frontend
+    ports:
+      - 3000:3000
+    command: npm test
+
   backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - 3001:3001
+    environment: 
+      DB_URL: mongodb://db/vidly
+    command: ./docker-entrypoint.sh
+
+    backend-test: 
     depends_on: 
       - db
     build: ./backend
